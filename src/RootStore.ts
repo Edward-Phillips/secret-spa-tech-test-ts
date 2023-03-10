@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
 
 class RootStore {
@@ -16,6 +16,8 @@ class RootStore {
       selectedDay: observable,
       selectedTime: observable,
       selectedPeriod: observable,
+      timeMax: computed,
+      timeMin: computed,
       setSelectedDay: action,
       setSelectedTime: action,
       setSelectedPeriod: action,
@@ -30,6 +32,35 @@ class RootStore {
     this.selectedDay = this.days[0];
     this.selectedTime = undefined;
     this.selectedPeriod = this.periods[0];
+  }
+  get timeMax() {
+    switch (this.selectedPeriod) {
+      case "Anytime":
+        return 10;
+      case "Morning":
+        return 12;
+      case "Afternoon":
+        return 17;
+      case "Evening":
+        return 22;
+      default:
+        return 22;
+    }
+  }
+
+  get timeMin() {
+    switch (this.selectedPeriod) {
+      case "Anytime":
+        return 6;
+      case "Morning":
+        return 6
+      case "Afternoon":
+        return 12;
+      case "Evening":
+        return 15;
+      default:
+        return 6;
+    }
   }
 
   setSelectedDay = (day: string) => {

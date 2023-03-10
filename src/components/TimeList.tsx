@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useStore } from "../App";
 import TimeItem from "./TimeItem";
 
@@ -6,11 +7,13 @@ const TimeList = () => {
 
   return (
     <div className="timeList">
-      {rootStore.times.map((t) => (
-        <TimeItem time={t} key={t} />
-      ))}
+      {rootStore.times
+        .filter((time) => time >= rootStore.timeMin && time < rootStore.timeMax)
+        .map((t) => (
+          <TimeItem time={t} key={t} />
+        ))}
     </div>
   );
 };
 
-export default TimeList;
+export default observer(TimeList);
