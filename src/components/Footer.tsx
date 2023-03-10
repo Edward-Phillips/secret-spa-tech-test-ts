@@ -25,7 +25,7 @@ const Footer = () => {
         </p>
         <p>0 professionals available</p>
       </div>
-      <button className="bookButton" onClick={handleBookNow}>Book Now</button>
+      <button disabled={!rootStore.selectedTime} className="bookButton" onClick={handleBookNow}>Book Now</button>
     </div>
   );
 };
