@@ -1,4 +1,11 @@
+import { useStore } from "../App";
+
 const Footer = () => {
+  const rootStore = useStore();
+
+  const handleBookNow = () => {
+    rootStore.requestBooking();
+  };
   return (
     <div className="footer">
       <div>
@@ -7,7 +14,7 @@ const Footer = () => {
         </p>
         <p>0 professionals available</p>
       </div>
-      <button className="bookButton">Book Now</button>
+      <button className="bookButton" onClick={handleBookNow}>Book Now</button>
     </div>
   );
 };
