@@ -1,4 +1,6 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, runInAction } from "mobx";
+import moment from "moment";
+import mockApi from "./mockApi";
 
 
 class RootStore {
@@ -8,6 +10,8 @@ class RootStore {
   selectedDay: string;
   selectedTime: number | undefined;
   selectedPeriod: string;
+  availablePros: number;
+  availableProsLoading: boolean;
 
   constructor() {
     makeObservable(this, {
@@ -16,6 +20,7 @@ class RootStore {
       selectedDay: observable,
       selectedTime: observable,
       selectedPeriod: observable,
+      availableProsLoading: observable,
       timeMax: computed,
       timeMin: computed,
       setSelectedDay: action,
@@ -32,6 +37,8 @@ class RootStore {
     this.selectedDay = this.days[0];
     this.selectedTime = undefined;
     this.selectedPeriod = this.periods[0];
+    this.availablePros = -1;
+    this.availableProsLoading = false;
   }
   get timeMax() {
     switch (this.selectedPeriod) {
@@ -63,9 +70,20 @@ class RootStore {
     }
   }
 
-  setSelectedDay = (day: string) => {
+  fetchPros = () => {
+    this.availableProsLoading = true;
+    mockApi.getNumberOfPros(Number(moment(this.selectedDay).format("DD"))).then((availablePros:number) => {
+      runInAction(() => {
+        this.availablePros = availablePros;
+        this.availableProsLoading = false;
+      })
+    })
+  }
+
+  setSelectedDay = async (day: string) => {
     this.selectedDay = day;
     this.selectedTime = undefined;
+    this.availablePros = await mockApi.getNumberOfPros(Number(moment(day).format("DD")));
   };
 
   setSelectedTime = (time: number) => {
