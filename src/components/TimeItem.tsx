@@ -1,15 +1,22 @@
-import moment from "moment";
-
+import { useStore } from "../App";
 interface Props {
   time: number;
 }
 
 const getMinutes = (time: number) => {
-  return ( time % 1 > 0 ? ((time % 1) * 60) : "00");
-}
+  return time % 1 > 0 ? (time % 1) * 60 : "00";
+};
 
 const TimeItem = ({ time }: Props) => {
-  return <button className="timeItem">{Math.floor(time) + ":" + getMinutes(time)}</button>;
+  const rootStore = useStore();
+  const handleTimeClick = () => {
+    rootStore.setSelectedTime(time);
+  };
+  return (
+    <button onClick={handleTimeClick} className="timeItem">
+      {Math.floor(time) + ":" + getMinutes(time)}
+    </button>
+  );
 };
 
 export default TimeItem;

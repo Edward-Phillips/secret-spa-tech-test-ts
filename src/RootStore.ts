@@ -1,14 +1,24 @@
-import { makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
+
 
 class RootStore {
   days: string[] = [];
   times: number[] = [];
   periods = ["Anytime", "Morning", "Afternoon", "Evening"];
+  selectedDay: string;
+  selectedTime: number;
+  selectedPeriod: string;
 
   constructor() {
     makeObservable(this, {
       days: observable,
       times: observable,
+      selectedDay: observable,
+      selectedTime: observable,
+      selectedPeriod: observable,
+      setSelectedDay: action,
+      setSelectedTime: action,
+      setSelectedPeriod: action,
     });
 
     this.times = getTimes();
@@ -17,7 +27,22 @@ class RootStore {
       date.setDate(date.getDate() + i);
       return date.toDateString();
     })
+    this.selectedDay = this.days[0];
+    this.selectedTime = this.times[0];
+    this.selectedPeriod = this.periods[0];
   }
+
+  setSelectedDay = (day: string) => {
+    this.selectedDay = day;
+  };
+
+  setSelectedTime = (time: number) => {
+    this.selectedTime = time;
+  };
+
+  setSelectedPeriod = (period: string) => {
+    this.selectedPeriod = period;
+  };
 
   requestBooking = () => {
     alert("Booking requested!");
