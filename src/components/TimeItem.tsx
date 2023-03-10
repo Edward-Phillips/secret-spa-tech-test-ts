@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useStore } from "../App";
 interface Props {
   time: number;
@@ -13,10 +14,10 @@ const TimeItem = ({ time }: Props) => {
     rootStore.setSelectedTime(time);
   };
   return (
-    <button onClick={handleTimeClick} className="timeItem">
+    <button onClick={handleTimeClick} className={(rootStore.selectedTime === time ? "selected " : "") + "timeItem"}>
       {Math.floor(time) + ":" + getMinutes(time)}
     </button>
   );
 };
 
-export default TimeItem;
+export default observer(TimeItem);

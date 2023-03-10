@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import moment from "moment";
 import { useStore } from "../App";
 
@@ -11,10 +12,10 @@ const DayItem = ({ day }: Props) => {
     rootStore.setSelectedDay(day);
   };
   return (
-    <button onClick={handleDayClick} className="dayItem">
+    <button onClick={handleDayClick} className={(rootStore.selectedDay === day ? "selected " : "") + "dayItem"}>
       {moment(day).format("MMM Do YYYY")}
     </button>
   );
 };
 
-export default DayItem;
+export default observer(DayItem);
