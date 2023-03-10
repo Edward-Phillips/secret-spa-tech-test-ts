@@ -12,7 +12,10 @@ const DayItem = ({ day }: Props) => {
     rootStore.setSelectedDay(day);
   };
   return (
-    <button onClick={handleDayClick} className={(rootStore.selectedDay === day ? "selected " : "") + "dayItem"}>
+    <button
+      onClick={handleDayClick}
+      className={(rootStore.selectedDay === day ? "selected " : "") + "dayItem"}
+    >
       {moment(day).format("MMM Do YYYY")}
     </button>
   );

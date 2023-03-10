@@ -17,13 +17,22 @@ const TimeItem = ({ time }: Props) => {
 
   const isDisabled = () => {
     const now = moment();
-    const apptTime = moment(rootStore.selectedDay).hours(Math.floor(time)).minutes((time % 1) * 60);
-    const difference = apptTime.diff(now, 'minutes')
-    return (difference < 120) ?? false;
-  }
+    const apptTime = moment(rootStore.selectedDay)
+      .hours(Math.floor(time))
+      .minutes((time % 1) * 60);
+    const difference = apptTime.diff(now, "minutes");
+    return difference < 120 ?? false;
+  };
 
   return (
-    <button onClick={handleTimeClick} className={(isDisabled() ? "disabled " : "") + (rootStore.selectedTime === time ? "selected " : "") + "timeItem"}>
+    <button
+      onClick={handleTimeClick}
+      className={
+        (isDisabled() ? "disabled " : "") +
+        (rootStore.selectedTime === time ? "selected " : "") +
+        "timeItem"
+      }
+    >
       {Math.floor(time) + ":" + getMinutes(time)}
     </button>
   );

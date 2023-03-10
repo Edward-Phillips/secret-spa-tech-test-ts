@@ -1,7 +1,12 @@
-import { action, computed, makeObservable, observable, runInAction } from "mobx";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
 import moment from "moment";
 import mockApi from "./mockApi";
-
 
 class RootStore {
   days: string[] = [];
@@ -29,11 +34,11 @@ class RootStore {
     });
 
     this.times = getTimes();
-    this.days = Array.from({ length: 28}, (_, i) => {
+    this.days = Array.from({ length: 28 }, (_, i) => {
       const date = new Date();
       date.setDate(date.getDate() + i);
       return date.toDateString();
-    })
+    });
     this.selectedDay = this.days[0];
     this.selectedTime = undefined;
     this.selectedPeriod = this.periods[0];
@@ -60,7 +65,7 @@ class RootStore {
       case "Anytime":
         return 6;
       case "Morning":
-        return 6
+        return 6;
       case "Afternoon":
         return 12;
       case "Evening":
@@ -72,25 +77,32 @@ class RootStore {
 
   get dateAndTime() {
     if (this.selectedTime && this.selectedDay) {
-      return `${moment(this.selectedDay).hours(Math.floor(this.selectedTime)).minutes((this.selectedTime % 1) * 60).format("H:mm on MMM Do YYYY")}`
+      return `${moment(this.selectedDay)
+        .hours(Math.floor(this.selectedTime))
+        .minutes((this.selectedTime % 1) * 60)
+        .format("H:mm on MMM Do YYYY")}`;
     }
     return "No date and time selected";
   }
 
   fetchPros = () => {
     this.availableProsLoading = true;
-    mockApi.getNumberOfPros(Number(moment(this.selectedDay).format("DD"))).then((availablePros:number) => {
-      runInAction(() => {
-        this.availablePros = availablePros;
-        this.availableProsLoading = false;
-      })
-    })
-  }
+    mockApi
+      .getNumberOfPros(Number(moment(this.selectedDay).format("DD")))
+      .then((availablePros: number) => {
+        runInAction(() => {
+          this.availablePros = availablePros;
+          this.availableProsLoading = false;
+        });
+      });
+  };
 
   setSelectedDay = async (day: string) => {
     this.selectedDay = day;
     this.selectedTime = undefined;
-    this.availablePros = await mockApi.getNumberOfPros(Number(moment(day).format("DD")));
+    this.availablePros = await mockApi.getNumberOfPros(
+      Number(moment(day).format("DD"))
+    );
   };
 
   setSelectedTime = (time: number) => {
@@ -102,16 +114,21 @@ class RootStore {
   };
 
   requestBooking = () => {
-    alert(`Your booking has been made for ${this.dateAndTime}. We have sent your request to ${this.availablePros} professional${this.availablePros > 1 ? "s" : ""}.`);
+    alert(
+      `Your booking has been made for ${
+        this.dateAndTime
+      }. We have sent your request to ${this.availablePros} professional${
+        this.availablePros > 1 ? "s" : ""
+      }.`
+    );
   };
 }
 
 export default RootStore;
 
-
 const startHour = 6;
 const endHour = 22;
-const increment = .25;
+const increment = 0.25;
 // function to get times in same format as this.times in RootStore
 const getTimes = () => {
   const times = [];
@@ -119,4 +136,4 @@ const getTimes = () => {
     times.push(i);
   }
   return times;
-}
+};

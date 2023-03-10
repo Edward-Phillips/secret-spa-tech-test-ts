@@ -11,7 +11,7 @@ const Footer = () => {
 
   useEffect(() => {
     rootStore.fetchPros();
-  }, [rootStore.selectedDay])
+  }, [rootStore.selectedDay]);
 
   return (
     <div className="footer">
@@ -19,9 +19,18 @@ const Footer = () => {
         <p>
           <b>{rootStore.dateAndTime}</b>
         </p>
-        <p>{rootStore.availableProsLoading ? "..." : rootStore.availablePros} professionals available</p>
+        <p>
+          {rootStore.availableProsLoading ? "..." : rootStore.availablePros}{" "}
+          professionals available
+        </p>
       </div>
-      <button disabled={!rootStore.selectedTime || rootStore.availablePros == 0} className="bookButton" onClick={handleBookNow}>Book Now</button>
+      <button
+        disabled={!rootStore.selectedTime || rootStore.availablePros == 0}
+        className="bookButton"
+        onClick={handleBookNow}
+      >
+        Book Now
+      </button>
     </div>
   );
 };
