@@ -9,7 +9,7 @@ const getMinutes = (time: number) => {
 }
 
 const TimeItem = ({ time }: Props) => {
-  return <button className="timeItem">{Math.round(time) + ":" + getMinutes(time)}</button>;
+  return <button className="timeItem">{Math.floor(time) + ":" + getMinutes(time)}</button>;
 };
 
 export default TimeItem;
