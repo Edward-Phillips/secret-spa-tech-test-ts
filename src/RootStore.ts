@@ -6,7 +6,7 @@ class RootStore {
   times: number[] = [];
   periods = ["Anytime", "Morning", "Afternoon", "Evening"];
   selectedDay: string;
-  selectedTime: number;
+  selectedTime: number | undefined;
   selectedPeriod: string;
 
   constructor() {
@@ -28,7 +28,7 @@ class RootStore {
       return date.toDateString();
     })
     this.selectedDay = this.days[0];
-    this.selectedTime = this.times[0];
+    this.selectedTime = undefined;
     this.selectedPeriod = this.periods[0];
   }
 
