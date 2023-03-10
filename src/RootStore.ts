@@ -48,7 +48,7 @@ class RootStore {
   get timeMax() {
     switch (this.selectedPeriod) {
       case "Anytime":
-        return 10;
+        return 22;
       case "Morning":
         return 12;
       case "Afternoon":
