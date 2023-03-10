@@ -11,7 +11,7 @@ class RootStore {
       times: observable,
     });
 
-    this.times = [6, 6.25, 6.5, 6.75, 7, 7.25, 7.5, 7.75, 8, 8.25, 8.5, 8.75];
+    this.times = getTimes();
     this.days = Array.from({ length: 28}, (_, i) => {
       const date = new Date();
       date.setDate(date.getDate() + i);
@@ -25,3 +25,16 @@ class RootStore {
 }
 
 export default RootStore;
+
+
+const startHour = 6;
+const endHour = 22;
+const increment = .25;
+// function to get times in same format as this.times in RootStore
+const getTimes = () => {
+  const times = [];
+  for (let i = startHour; i <= endHour; i += increment) {
+    times.push(i);
+  }
+  return times;
+}
