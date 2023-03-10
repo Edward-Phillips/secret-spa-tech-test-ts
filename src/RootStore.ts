@@ -70,6 +70,13 @@ class RootStore {
     }
   }
 
+  get dateAndTime() {
+    if (this.selectedTime && this.selectedDay) {
+      return `${moment(this.selectedDay).hours(Math.floor(this.selectedTime)).minutes((this.selectedTime % 1) * 60).format("H:mm on MMM Do YYYY")}`
+    }
+    return "No date and time selected";
+  }
+
   fetchPros = () => {
     this.availableProsLoading = true;
     mockApi.getNumberOfPros(Number(moment(this.selectedDay).format("DD"))).then((availablePros:number) => {
@@ -95,7 +102,7 @@ class RootStore {
   };
 
   requestBooking = () => {
-    alert("Booking requested!");
+    alert(`Your booking has been made for ${this.dateAndTime}. We have sent your request to ${this.availablePros} professional${this.availablePros > 1 ? "s" : ""}.`);
   };
 }
 
