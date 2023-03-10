@@ -34,6 +34,7 @@ class RootStore {
 
   setSelectedDay = (day: string) => {
     this.selectedDay = day;
+    this.selectedTime = undefined;
   };
 
   setSelectedTime = (time: number) => {
